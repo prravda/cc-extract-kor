@@ -16,13 +16,13 @@ export const isCommentLine = (codeLine: string): boolean => {
   );
 };
 
-export const extractKoreanStrings = (code: string): string[] => {
+export const extractKoreanStrings = (codeLine: string): string[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
     /[\uAC00-\uD7AF]+([.,\s\/|0-9]*[\uAC00-\uD7AF]+)*[.~!?]?/g;
 
   // Find all matches in the input code
-  const matches = code.match(koreanRegex);
+  const matches = codeLine.match(koreanRegex);
 
   // Return the matches or an empty array if no matches found
   return matches || [];
