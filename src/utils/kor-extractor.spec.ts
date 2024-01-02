@@ -1,7 +1,8 @@
 import { extractKoreanStringsFromCode } from "./kor-extractor";
 import {
   testSuitsHtmlBlocks,
-  hugeHtmlBlock,
+  hugeHtmlBlockCaseOne,
+  hugeHTMLBlockCaseTwo,
 } from "./test-suits/test-suits-html-blocks";
 
 describe("Test: korExtractor function", () => {
@@ -18,7 +19,12 @@ describe("Test: korExtractor function", () => {
   });
 
   it("should return an array of korean characters - case 2", () => {
-    const result = extractKoreanStringsFromCode(hugeHtmlBlock);
+    const result = extractKoreanStringsFromCode(hugeHtmlBlockCaseOne);
+    console.log(result);
+  });
+
+  it("should return an array of korean characters - case 3", () => {
+    const result = extractKoreanStringsFromCode(hugeHTMLBlockCaseTwo);
     console.log(result);
   });
 });

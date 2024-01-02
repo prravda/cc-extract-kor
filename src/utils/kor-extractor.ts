@@ -1,3 +1,21 @@
+export const isCommentLine = (codeLine: string): boolean => {
+  // Remove single-line comments
+  const patternForSingleLineComments = /\/\/.*/g;
+
+  // Remove HTML comments
+  const patternForHTMLStyleComments = /<!--[\s\S]*?-->/g;
+
+  // Remove multi-line comments
+  const patternForMultiLineComments = /\/\*[\s\S]*?\*\//g;
+
+  // return true if any comments are found
+  return (
+    patternForSingleLineComments.test(codeLine) ||
+    patternForHTMLStyleComments.test(codeLine) ||
+    patternForMultiLineComments.test(codeLine)
+  );
+};
+
 export const extractKoreanStrings = (code: string): string[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
@@ -16,6 +34,13 @@ export const extractKoreanStringsFromCode = (code: string): string[] => {
 
   // read line by line and extract korean strings
   for (const eachLine of code.split("\n")) {
+    // first, trim the line using trimStart
+    eachLine.trimStart();
+
+    // then, if this codeline is comment, skip this line
+    if (isCommentLine(eachLine)) continue;
+
+    // otherwise, extract korean strings from this line
     const koreanStringsInThisLine = extractKoreanStrings(eachLine);
     result.push(...koreanStringsInThisLine);
   }
