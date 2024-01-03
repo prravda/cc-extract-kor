@@ -3,6 +3,7 @@ export function ExtractedKorean(props: {
   codeLine: string;
   extractedKorean: string;
   variableName?: string;
+  onDelete: () => void;
 }) {
   return (
     <div className={"extractedKorean"}>
@@ -12,7 +13,7 @@ export function ExtractedKorean(props: {
           className="extractedKorean__textarea"
           rows={10}
           cols={50}
-          value={"mock codeline"}
+          value={props.codeLine.trimStart()}
           readOnly={true}
         ></textarea>
       </div>
@@ -35,8 +36,13 @@ export function ExtractedKorean(props: {
           rows={5}
           cols={30}
           value={props.variableName}
-          readOnly={true}
         ></textarea>
+      </div>
+
+      <div className={"extractedKorean__deleteButtonSection"}>
+        <button onClick={props.onDelete} className="delete-button">
+          Delete
+        </button>
       </div>
     </div>
   );

@@ -2,13 +2,16 @@ import React, { useState, FormEvent } from "react";
 import { ExtractedKorean } from "./ExtractedKorean";
 import { extractKoreanStringsFromCode } from "../utils/kor-extractor";
 import { korReplacer } from "../utils/kor-replacer";
+import { KoreanExtractorResults } from "../interfaces/korean-extractor-results";
 
 export function Input() {
   const [code, setCode] = useState<string>(``);
   const [modifiedCode, setModifiedCode] = useState<string>("");
-  const [extractedKoreanStrings, setExtractedKoreanStrings] = useState<
-    string[]
+
+  const [koreanExtractorResult, setKoreanExtractorResult] = useState<
+    KoreanExtractorResults[]
   >([]);
+
   const [variableNames, setVariableNames] = useState<string[]>([]);
 
   const handleCodeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,8 +26,17 @@ export function Input() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault(); // Prevents the default form submission behavior
-    const extractedStrings = extractKoreanStringsFromCode(code);
-    setExtractedKoreanStrings(extractedStrings);
+    const result = extractKoreanStringsFromCode(code);
+    setKoreanExtractorResult(result);
+  };
+
+  const handleDelete = (index: number) => {
+    const newKoreanExtractorResult = koreanExtractorResult.filter(
+      (_, i) => i !== index,
+    );
+    const newVariableNames = variableNames.filter((_, i) => i !== index);
+    setKoreanExtractorResult(newKoreanExtractorResult);
+    setVariableNames(newVariableNames);
   };
 
   return (
@@ -48,12 +60,14 @@ export function Input() {
       </form>
 
       <h2>2. Extracted Korean characters and it's source</h2>
-      <p>{`Extracted ${extractedKoreanStrings.length} Korean characters, It separated by newline`}</p>
+      <p>{`Extracted ${koreanExtractorResult.length} Korean characters, It separated by newline`}</p>
       <textarea
         className="extractedKorean__textarea"
         rows={10}
         cols={80}
-        value={extractedKoreanStrings.join("\n")}
+        value={koreanExtractorResult
+          .map<string>((eachResult) => eachResult.koreanString)
+          .join("\n")}
         readOnly={true}
       ></textarea>
       <p>{`Type the variable name to below text area, It separated by newline`}</p>
@@ -75,12 +89,13 @@ export function Input() {
         </button>
       </div>
 
-      {extractedKoreanStrings.map((korean, index) => (
+      {koreanExtractorResult.map(({ koreanString, codeLine }, index) => (
         <ExtractedKorean
           key={index}
-          codeLine={code}
-          extractedKorean={korean}
+          codeLine={codeLine}
+          extractedKorean={koreanString}
           variableName={variableNames[index] || ""}
+          onDelete={() => handleDelete(index)}
         />
       ))}
 
@@ -92,7 +107,13 @@ export function Input() {
           id={"replaceStringIntoVariable"}
           onClick={() =>
             setModifiedCode(
-              korReplacer(code, variableNames, extractedKoreanStrings),
+              korReplacer(
+                code,
+                variableNames,
+                koreanExtractorResult.map<string>(
+                  (result) => result.koreanString,
+                ),
+              ),
             )
           }
         >

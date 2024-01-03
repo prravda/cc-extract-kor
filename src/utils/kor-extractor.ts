@@ -1,3 +1,5 @@
+import { KoreanExtractorResults } from "../interfaces/korean-extractor-results";
+
 export const isCommentLine = (codeLine: string): boolean => {
   // Remove single-line comments
   const patternForSingleLineComments = /\/\/.*/g;
@@ -22,7 +24,9 @@ export const doesNotContainKorean = (codeLine: string): boolean => {
   return patternForNonKoreanCharactersOnly.test(codeLine);
 };
 
-export const extractKoreanStrings = (codeLine: string): string[] => {
+export const extractKoreanStrings = (
+  codeLine: string,
+): KoreanExtractorResults[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
     /(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+([.,~!?\s\/|0-9]*(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+)*(<br\s*\/?>|[.~!?])?/g;
@@ -32,17 +36,24 @@ export const extractKoreanStrings = (codeLine: string): string[] => {
   const matches = codeLine.match(koreanRegex);
 
   // Finally, filter matches which contains only non-korean characters and return
-  return matches ? matches.filter((match) => !doesNotContainKorean(match)) : [];
+  const extractedKeywords = matches
+    ? matches.filter((match) => !doesNotContainKorean(match))
+    : [];
+
+  // return extracted keywords and code line
+  return extractedKeywords.map<KoreanExtractorResults>((koreanString) => {
+    return {
+      koreanString,
+      codeLine,
+    };
+  });
 };
 
-export interface KoreanExtractorResults {
-  koreanStrings: string[];
-  codeLines: string[];
-}
-
-export const extractKoreanStringsFromCode = (code: string): string[] => {
+export const extractKoreanStringsFromCode = (
+  code: string,
+): KoreanExtractorResults[] => {
   // initialize result array
-  const result: string[] = [];
+  const result: KoreanExtractorResults[] = [];
 
   // read line by line and extract korean strings
   for (const eachLine of code.split("\n")) {
@@ -56,13 +67,27 @@ export const extractKoreanStringsFromCode = (code: string): string[] => {
     if (doesNotContainKorean(eachLine)) continue;
 
     // otherwise, extract korean strings from this line
-    const koreanStringsInThisLine = extractKoreanStrings(eachLine);
-    result.push(...koreanStringsInThisLine);
+    result.push(...extractKoreanStrings(eachLine));
   }
 
-  // sort the result array by elements length in descending order
-  const sortedByDescOrder = [...result].sort((a, b) => b.length - a.length);
+  // remove duplicates by the key 'koreanString'
+  const uniqueResults = result.reduce<KoreanExtractorResults[]>(
+    (unique, eachResult) => {
+      if (
+        !unique.find(
+          (eachUnique) => eachUnique.koreanString === eachResult.koreanString,
+        )
+      ) {
+        unique.push(eachResult);
+      }
+      return unique;
+    },
+    [],
+  );
 
-  // remove duplicates and return
-  return Array.from(new Set<string>(sortedByDescOrder));
+  // sort by the length of koreanString in descending order
+  uniqueResults.sort((a, b) => b.koreanString.length - a.koreanString.length);
+
+  // then return the result
+  return uniqueResults;
 };
