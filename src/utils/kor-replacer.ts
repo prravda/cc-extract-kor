@@ -7,7 +7,7 @@ export const korReplacer = (
   // iterate by index
   for (let i = 0; i < targetStrings.length; i++) {
     // replace all targetStrings[i] to variableNames[i]
-    codeSnippet = codeSnippet.replace(
+    codeSnippet = codeSnippet.replaceAll(
       targetStrings[i],
       `<?= lang('${variableNames[i]}') ?>`,
     );

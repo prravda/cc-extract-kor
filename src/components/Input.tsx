@@ -92,7 +92,7 @@ export function Input() {
           id={"replaceStringIntoVariable"}
           onClick={() =>
             setModifiedCode(
-              korReplacer(code, extractedKoreanStrings, variableNames),
+              korReplacer(code, variableNames, extractedKoreanStrings),
             )
           }
         >
