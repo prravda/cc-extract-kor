@@ -3,6 +3,7 @@ import {
   testSuitsHtmlBlocks,
   hugeHtmlBlockCaseOne,
   hugeHTMLBlockCaseTwo,
+  hugeHTMLBlockCaseThree,
 } from "./test-suits/test-suits-html-blocks";
 
 describe("Test: korExtractor function", () => {
@@ -28,5 +29,16 @@ describe("Test: korExtractor function", () => {
     const result = extractKoreanStringsFromCode(hugeHTMLBlockCaseTwo);
     console.log(result);
     expect(result.length).not.toBe(0);
+  });
+
+  it("should return an array of korean characters - case 4", () => {
+    const testResult = extractKoreanStringsFromCode(hugeHTMLBlockCaseThree);
+    console.log(testResult);
+  });
+
+  it("should successfully extract korean characters which contains breaking tag(<br>)", () => {
+    const { html, korean } = testSuitsHtmlBlocks.koreanContainBreakingTag;
+    const testResult = extractKoreanStringsFromCode(html);
+    console.log(testResult);
   });
 });

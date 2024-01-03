@@ -19,7 +19,7 @@ export const isCommentLine = (codeLine: string): boolean => {
 export const extractKoreanStrings = (codeLine: string): string[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
-    /[\uAC00-\uD7AF]+([.,\s\/|0-9]*[\uAC00-\uD7AF]+)*[.~!?]?/g;
+    /(<br\s*\/?>)?[\uAC00-\uD7AF]+([.,\s\/|0-9]*(<br\s*\/?>)?[\uAC00-\uD7AF]+)*(<br\s*\/?>|[.~!?])?/g;
 
   // Find all matches in the input code
   const matches = codeLine.match(koreanRegex);

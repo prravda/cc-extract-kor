@@ -33,6 +33,20 @@ placeholder="정답을 입력하고 엔터를 치세요" autocomplete="off" auto
 
     korean: ["정답을 입력하고 엔터를 치세요", "제출"],
   },
+
+  koreanContainBreakingTag: {
+    html: `<div class="quest_body form-inline" style="height: 177px; margin-bottom: 10px; padding-top:70px;">
+   <div><br>처음에 있는 경우</div>
+   <div>사이에<br>있는 경우</div>
+   <div>끝에 있는 경우<br></div>
+</div>>`,
+
+    korean: [
+      `<br>처음에 있는 경우`,
+      `사이에<br>있는 경우`,
+      `끝에 있는 경우<br>`,
+    ],
+  },
 };
 
 export const hugeHtmlBlockCaseOne = `<?php
@@ -4612,4 +4626,481 @@ function startQuiz() {
 
 
 <? endif; ?>
+</script>`;
+
+export const hugeHTMLBlockCaseThree = `<link rel="stylesheet" href="/styles/v2/reset.css" />
+<link rel="stylesheet" href="/styles/v2/grammar_info.css?v=20230718" />
+<div id="wrap" style="<? if (isset($page_mode) && $page_mode == 'home' && (isset($deviceType) && ($deviceType == 'phone' || $deviceType == 'tablet')) ): ?>overflow-x: hidden;<? endif; ?>">
+    <? require_once('./application/views/template/v2/main_top.php'); ?>
+
+<div class="section s1">
+<a name="g_intro"></a>
+    <div class="content">
+<div class="title1">
+    선생님 문법수업에
+<span class="text-gclass">문법훈련<img class="img1" src="/images/v3/grammar/img_twingcle01.png" /><img class="img2" src="/images/v3/grammar/img_line01.png" /></span>을 추가하세요!
+    </div>
+
+    <div class="container1">
+<div class="container2">
+<div class="title2 arrow1">유닛별 100문항</div>
+<div class="title2 arrow2">오답 다시풀기</div>
+<div class="title2 arrow3">선생님의</br>오답관리</div>
+</div>
+<div class="title3">모든 시중 문법교재 유닛마다</br>온라인 문법 훈련 프로그램 제공</div>
+</div>
+
+<div class="container3" ><img class="img3" src="/images/v3/grammar/img_section01_book.png" /></div>
+
+    </div>
+    </div>
+
+    <div class="section s2">
+<div class="content">
+<div class="container1">
+<iframe width="1092" height="614" src="https://www.youtube.com/embed/5H1KwleLDqE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+
+<div class="section s3">
+<a name="g_ct"></a>
+    <div class="content">
+<div class="cc-table fill-parent-w middle">
+<div class="img1">
+<img src="/images/v3/grammar/img_question01.png" />
+</div>
+<div>
+<div class="title1">
+    효과적 반복과 오답관리 가능한<br>초등, 중등 문법훈련용 20,000문항
+</div>
+<div class="title2">
+    <!-- 15,000 문항 <span class="text-light">✕</span> 반복학습 -->
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section s4">
+<div class="content">
+<div class="cc-table fill-parent-w middle">
+<div>
+    <div class="title1">
+    초등 대상 84개 유닛<br>중등 대상 148개 유닛
+</div>
+<div class="title2">
+    <!-- 148개 유닛 -->
+</div>
+</div>
+<div class="img1">
+<div class="chapter-box">
+<div class="cc-scroll-y gclass chapter-list" style="height: 400px;">
+
+    </div>
+    <div class="scroll-box">
+<div class="cc-table fill-parent middle">
+<div class="text-center">
+<img src="/images/v3/grammar/ic_mouse01.png" />
+<div class="title3">스크롤을 해보세요</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="section s5">
+<div class="content">
+<div class="cc-table middle w-100p">
+<div class="left-cell">
+<img src="/images/v3/grammar/grammargif.gif" style="border-radius:20px;" class="w-100p"/>
+    </div>
+    <div class="right-cell">딱3분!<br>재미있는 문법개념 영상</div>
+</div>
+</div>
+</div>
+
+
+<div class="section s6">
+<a name="g_fc"></a>
+    <div class="content">
+<div class="title1">자동채점 됩니다</div>
+<div class="title2">내신대비 서술형 중심</div>
+<div class="img1">
+<img src="/images/v3/grammar/img_q1.png" />
+<img src="/images/v3/grammar/img_q2.png" />
+    </div>
+    </div>
+    </div>
+
+    <div class="section s7">
+<div class="content">
+<div class="title1">지루하지 않아요</div>
+<div class="title2">다양한 인터랙티브 문항</div>
+<div class="img1">
+<img src="/images/v3/grammar/img_q3.png" />
+<img src="/images/v3/grammar/img_q4.png" />
+<img src="/images/v3/grammar/img_q5.png" />
+    </div>
+    </div>
+    </div>
+
+    <div class="section s8">
+<div class="content">
+<div><img src="/images/v3/grammar/ic_test01.png" /></div>
+    <div class="cc-table fill-parent-w m-t">
+<div class="td">
+<div class="title1">
+    선생님을 도와주는<br>
+완벽한 관리 도구
+</div>
+<div class="bg1 border18 p-48" style="margin-top: 35px;">
+<div class="title2">실시간 모니터링하며 관리하기</div>
+<div class="title3">점수와 학생의 오답까지 즉시 파악하여 도울 수 있습니다</div>
+<div class="m-t-lg"><img src="/images/v3/grammar/img_exersise_test01.png" /></div>
+    <div class="m-t-lg"><img src="/images/v3/grammar/img_incorrect01.png" /></div>
+    </div>
+    </div>
+    <div class="space">&nbsp;</div>
+<div class="td bg1 border18 p-48 p-b-none">
+<div class="title2">학부모께 성적표 보내기</div>
+<div class="title3">클래스카드를 이용하여 성적표를 보내세요</div>
+<div class="img1"><img src="/images/v3/grammar/img_kakao01.png" /></div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="section s9">
+<div class="content">
+<div><img src="/images/v3/grammar/ic_talk01.png" /></div>
+    <div class="title1">
+    Class Grammar 를 이용하는<br>
+선생님, 학생들의 이야기
+</div>
+<div class="m-t-xxl cc-table box-body fill-parent-w">
+<div class="td">
+<div class="box">
+<div><img src="/images/v3/grammar/ic_quot02.png" /></div>
+    <div class="title2">
+    오답까지 다 맞추려고 하는걸 보며 오~~ 했어요!
+</div>
+<div class="title3">
+    교재로 문제 풀때는 고민을 하지 않고, 매우 지루해 하고 귀찮아하는게 보였는데 이상하게 닥터스 그래머로 하면  고민하며 다시 생각하고 풀어보고 오답까지 다 맞추려고 하는걸 보며 오~~ 했어요!
+</div>
+<div class="cc-table m-t-md">
+<div class="middle p-r">
+<img src="/images/v3/grammar/img_profile01.png" />
+</div>
+<div>
+<div class="title4">뿡샘 선생님</div>
+<div class="title5">초등 비중이 높은 학원 운영</div>
+</div>
+</div>
+<div class="title6">
+<a href="https://cafe.naver.com/classcardhakwon/6326" target="_blank">리뷰 자세히보기 <i class="material-icons text-gclass">arrow_forward</i></a>
+</div>
+</div>
+</div>
+<div class="space">&nbsp;</div>
+<div class="td">
+<div class="box">
+<div><img src="/images/v3/grammar/ic_quot02.png" /></div>
+    <div class="title2">
+    수업연구에 더 많은 시간을 투입할 수 있습니다.
+</div>
+<div class="title3">
+    아이들의 오답율을 확인하여 약점을 지우고, 저는 정기고사 대비 기출문제풀이에 더욱 집중할 수 있습니다. 수업연구에 더 많은 시간을 투입할 수 있습니다.
+</div>
+<div class="cc-table m-t-md">
+<div class="middle p-r">
+<img src="/images/v3/grammar/img_profile02.png" />
+</div>
+<div>
+<div class="title4">핑코 선생님</div>
+<div class="title5">중고등 보습학원 운영</div>
+</div>
+</div>
+<div class="title6">
+<a href="https://cafe.naver.com/classcardhakwon/6218" target="_blank">리뷰 자세히보기 <i class="material-icons text-gclass">arrow_forward</i></a>
+</div>
+</div>
+</div>
+<div class="space">&nbsp;</div>
+<div class="td">
+<div class="box">
+<div><img src="/images/v3/grammar/ic_quot02.png" /></div>
+    <div class="title2">
+    100점 맞은거 보고 제가 더 기분 좋은 날입니다.
+</div>
+<div class="title3">
+    문법 개념을 이해 못하는 게 아니라, 영어 문장이 익숙치 않아 문장 해석 자체가 어려운 친구인데, &lt;개념-연습-서술형-실전&gt; 순서대로 쭉 풀다보니 어느새 익숙해지나봐요. 100점 맞은거 보고 제가 더 기분 좋은 날입니다.
+</div>
+<div class="cc-table m-t-md">
+<div class="middle p-r">
+<img src="/images/v3/grammar/img_profile03.png" />
+</div>
+<div>
+<div class="title4">지쌤 선생님</div>
+<div class="title5">초중등 영어선생님</div>
+</div>
+</div>
+<div class="title6">
+<a href="https://cafe.naver.com/classcardhakwon/6595" target="_blank">리뷰 자세히보기 <i class="material-icons text-gclass">arrow_forward</i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section s10">
+<a name="g_price"></a>
+    <div class="content">
+<div class="title2">지금 바로 학생들에게 문법훈련을 시작하세요!</div>
+<div class="w-600 m-center p-t-lg">
+    <? foreach($G_priceTableArr as $i=>$row): ?>
+<? if ($i > 2) { break; } ?>
+<div class="cc-table middle box">
+<div class="title3">학생수 <?=$row['max_std_cnt']?>명</div>
+<div class="text-right">
+<div class="title4">
+<span class="font-80p">월이용료</span> <?= number_format($row['list_price']) ?>원
+    </div>
+    <div class="m-t-xs">
+<span class="title5">Pro 고객</span>
+<span class="title6"><?= number_format($row['list_price'] * 0.9) ?>원</span>
+</div>
+</div>
+</div>
+<? endforeach; ?>
+</div>
+<div class="title7">
+<a data-toggle="modal" data-target="#GPriceTable">가격표 자세히보기 <i class="material-icons text-gclass">arrow_forward</i></a>
+</div>
+</div>
+</div>
+
+<div class="section s11">
+<iframe width="1092" height="614" src="https://www.youtube.com/embed/FAWz1CgDAOU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+</div>
+
+<div class="tmp hidden">
+<div class="chapter-item"></div>
+    <div class="modal-unit-item" data-grade="">
+<div class="cc-table fill-parent-w ">
+<div class="w-150 chapter font-bold">1</div>
+    <div class="unit-name font-bold">2</div>
+    <div class="grade p-r text-right w-60">3</div>
+    </div>
+    </div>
+    </div>
+    <div class="modal fade" id="GPriceTable" tabindex="-1" role="dialog">
+    <style>
+.info-table { width: 100%; margin-top: 20px; text-align: center; font-size: 12px; border-radius: 10px; border-style: hidden; box-shadow: 0 0 0 2px #7f5ac8;}
+.info-table td { width: 33%; padding: 6px 0px; }
+.info-table td { border-left: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+.info-table td:last-child { border-right: 1px solid #ddd; }
+.info-table td.title { border: none; padding:6px 8px; }
+.info-table td.empty { border-left: none; }
+.info-table td.header { background: #444; color: #fff; font-weight: 600; border: none; }
+.info-table td.header.pro { background: #78d024; color: #fff; }
+.info-table td.sub { background: #F2EBFF; font-weight: 600; text-align: left; padding-left: 25px; }
+.info-table td.left { text-align: left; padding-left: 30px; }
+.info-table td.pro-border { border-left: 3px solid #78d024; border-right: 3px solid #78d024; }
+.info-table td.pro-border-b { border-bottom: 3px solid #78d024; }
+.info-table td.etc { text-align: left; padding: 0px 10px; }
+.info-table td.title { border: none; padding:6px 8px; vertical-align:middle; background:#979797; color:#fff}
+</style>
+<div class="modal-dialog" style="width:520px">
+<div class="modal-content" style="border-radius: 0px;">
+<div style="position: absolute; top: 10px; right: 10px;">
+<a data-dismiss="modal"><i class="cc times" style="font-size: 28px;"></i></a>
+</div>
+<div style="padding: 40px;">
+<div class="cc-table middle">
+<div><img src="/images/v2/pro/img_title_info01.png" style="height:120px;z-index:100"></div>
+    <div class='p-l font-24 font-bold text-left fill-parent-w'>
+    Class Grammar 월 이용요금
+
+<div class='m-t-sm font-14 text-left'>
+<div class="font-normal font-16 m-t-xs">
+    * 해지 수수료 없음<br>
+* 1명당 4,400원<br>
+* Pro 이용고객 10% 할인 (1명당 3,960원)
+</div>
+</div>
+</div>
+</div>
+
+<div style='height:450px' class='m-t-25 cc-scroll-y success'>
+<table style='margin-top:0px'class="info-table">
+<tr class='h-50'>
+<th class="w-20p bg-gclass text-white" style='text-align:center'>
+<div class="font-16 font-bold">학생수</div>
+    </th>
+    <th class="w-40p bg-gclass text-white" style='text-align:center '>
+<div class="font-16 font-bold">월 이용료</div>
+</th>
+<th class="w-40p bg-gclass text-white" style='text-align:center '>
+<div class="font-16 font-bold">Pro고객 이용료</div>
+</th>
+</tr>
+<tr>
+<td class='sub font-bold font-16' style='width:10%; text-align:center'>1 명
+</td>
+<td class='font-bold font-16 p-r-sm' style='text-align:right'> 사용불가
+    </td>
+    <td class='font-bold font-16 p-r-sm' style='text-align:right'> 무료
+</td>
+</tr>
+<? foreach($G_priceTableArr as $i=>$row):
+$sale_price = number_format($row['list_price'] * 0.9);
+    ?>
+<tr>
+    <td class='sub font-bold font-16' style='width:10%; text-align:center'> <?=$row['max_std_cnt']?> 명
+</td>
+<td class='font-bold font-16 p-r-sm' style='text-align:right'> <?= number_format($row['list_price']) ?> 원
+</td>
+<td class='font-bold font-16 p-r-sm' style='text-align:right'> <?= $sale_price ?> 원
+</td>
+</tr>
+<?endforeach;?>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="grammarPriceTable" tabindex="-1" role="dialog">
+    <style>
+        #grammarPriceTable .img1 { position: absolute; right: 60px; bottom: -20px; }
+#grammarPriceTable table { width: 100%; }
+#grammarPriceTable table th, #grammarPriceTable table td { font-size: 14px; line-height: 160%; vertical-align: middle; width: 25%; text-align: center; }
+#grammarPriceTable table th.discount, #grammarPriceTable table td.discount { width: 50%; }
+#grammarPriceTable table th { position: sticky; color: #0085FF; height: 34px; top: 0px; background: #EEF5FB; }
+#grammarPriceTable table td { height: 38px; border-bottom: 1px solid #EBEBEB; }
+</style>
+<div class="modal-dialog" style="width:658px">
+<div class="modal-content" style="border-radius: 20px;">
+<div style="position: absolute; top: 18px; right: 20px;">
+<a data-dismiss="modal"><i class="cc times font-32"></i></a>
+</div>
+<div class="p-xl">
+<div class="font-20 font-bold">Class Grammar 가격표</div>
+<div class="m-t-xs font-14">클래스카드는 해지수수료가 없습니다. 부담없이 이용하세요.</div>
+<div class="m-t-xs pos-relative">
+<div class="img1">
+<img src="/images/v3/common/img_grammar_price01.png" />
+    </div>
+    </div>
+    <div style="height:450px" class="m-t-25 cc-scroll-y gclass">
+    <table>
+        <tr>
+            <th>학생수</th>
+    <th>월 이용료</th>
+<th class="discount">Pro 고객 이용료(10% 할인)</th>
+</tr>
+<? foreach($G_priceTableArr as $i=>$row): ?>
+<tr>
+    <td><?=$row['max_std_cnt']?>명</td>
+<td><?= number_format($row['list_price']) ?>원</td>
+<td class="discount"><?= number_format($row['list_price'] * 0.9) ?> 원</td>
+</tr>
+<?endforeach;?>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="preExperienceModal" tabindex="-1" role="dialog">
+<div class="modal-dialog" style="width:658px">
+<div class="modal-content" style="border-radius: 20px;">
+<div style="position: absolute; top: 22px; right: 25px;">
+<a data-dismiss="modal"><i class="cc times font-32"></i></a>
+</div>
+
+<div class="text-center" style="padding:60px 75px 65px 75px">
+<div class="font-bold" style="font-size:30px">1개월 무료 체험</div>
+<div class="m-t-sm font-22" style="line-height:160%">
+    클래스카드 <a class="text-gclass text-underline font-bold anchor-underline" href="/Login">로그인</a> 후 업그레이드 하세요
+    <br>
+    아직 계정이 없다면 <a class="text-gclass text-underline font-bold anchor-underline" href="/Login">회원가입</a> 해주세요
+    </div>
+    <div class="m-t-lg">
+<img src="/images/v3/common/pre_Grammar_img.png" style="margin-left:-40px"/>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+    jQuery(function($){
+      var unit_list = <?=json_encode($grammar_unit_list)?>;
+      sortGrammarChapter(unit_list);
+      filterChange('모두');
+      function sortGrammarChapter (grammar_unit_list){
+        var sort_chapter_list = {};
+        $.each(grammar_unit_list, function(i, unit_info){
+          if (sort_chapter_list[unit_info.chapter] == undefined){
+            sort_chapter_list[unit_info.chapter] = [];
+            sort_chapter_list[unit_info.chapter].push(unit_info)
+          }else{
+            sort_chapter_list[unit_info.chapter].push(unit_info)
+          }
+        });
+        setGrammarUnit(sort_chapter_list);
+      }
+      function setGrammarUnit(sorted_grammar_chapter){
+        var list = $('.chapter-list');
+        list.empty();
+        $.each(sorted_grammar_chapter, function(chapter, unit_list){
+          var chapter_body = $('.tmp .chapter-item').clone();
+          $.each(unit_list, function(i, v){
+            var unit_body = $('.tmp .modal-unit-item').clone();
+            unit_body.find('.chapter').text(v.chapter);
+            unit_body.find('.unit-name').text(v.unit_name);
+            unit_body.find('.grade').text(v.grade);
+
+            chapter_body.append(unit_body);
+          });
+          list.append(chapter_body);
+        });
+      }
+      function filterChange(sort_val){
+        $('.chapter-item').removeClass('hidden');
+        $('.modal-unit-item').removeClass('hidden');
+        $('.modal-unit-item .chapter').removeClass('visible');
+
+        if (sort_val == '모두'){
+
+        }else{
+          $('.modal-unit-item').addClass('hidden');
+          $('.modal-unit-item[data-grade="'+sort_val+'"]').removeClass('hidden');
+        }
+        $('.chapter-item').each(function(){
+          if($(this).find('.modal-unit-item:not(.hidden)').length == 0){
+            $(this).addClass('hidden');
+          }else{
+            $(this).find('.modal-unit-item:not(.hidden)').eq(0).find('.chapter').addClass('visible');
+          }
+        });
+      }
+      if ($('body').width() < 1240) {
+        $('#wrap').css('overflow-x', 'hidden');
+      }
+      $('.btn-pre-experience').click(function(){
+        $('#preExperienceModal').modal('show')
+
+      });
+    });
 </script>`;
