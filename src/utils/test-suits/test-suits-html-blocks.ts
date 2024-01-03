@@ -5104,3 +5104,429 @@ $sale_price = number_format($row['list_price'] * 0.9);
       });
     });
 </script>`;
+
+export const hugeHTMLBlockCaseFour = `<?
+    $sid = null;
+    if (array_key_exists('sid', $_GET)) {
+        $sid = $_GET["sid"];
+    }
+?>
+
+<link rel="stylesheet" href="/styles/v2/login.css?v=20230222" />
+<div class="cc-row fill-parent">
+
+    <? if (strlen($login_img) > 0): ?>
+        <? if (strlen($target_url) > 0): ?>
+        <a href="<?= $target_url ?>" target="_blank">
+        <? endif; ?>
+            <div class="cc-col w-60p left-img" style="background-image: url(<?= $this->config->item('media_domain').$login_img ?>);">
+                <div class="left-bottom">
+                    <div class="row2" style="align-items: flex-end; justify-content: center;">
+                        <? if (strlen($login_msg) > 0 || strlen($login_txt) > 0): ?>
+                        <div class="col-auto" style="width: 165px;">
+                            <? if (strlen($logo_img) > 0): ?>
+                            <img src="<?= $this->config->item('media_domain').$logo_img ?>" style="width: 165px;" />
+                            <? elseif (strlen($login_txt) > 0): ?>
+                            <div class="login-txt hidden"><div class="cc-ellipsis l2"><?= $login_txt ?></div></div>
+                            <? endif; ?>
+                        </div>
+                        <? endif; ?>
+                        <? if (strlen($login_msg) > 0 || strlen($login_contact) > 0): ?>
+                        <div class="col text-center <? if (strlen($logo_img) > 0): ?>p-l-lg p-r-lg<? endif; ?>">
+                            <? if (strlen($login_msg) > 0): ?>
+                            <div class="cc-ellipsis l2"><?= preg_replace("/\\n/i", "<br>", $login_msg) ?></div>
+                            <? endif; ?>
+                            <? if (strlen($login_contact) > 0): ?>
+                            <div class="login-contact <? if (strlen($login_msg) > 0): ?>m-t-12<? endif; ?>"><?= $login_contact ?></div>
+                            <? endif; ?>
+                        </div>
+                        <? endif; ?>
+                        <? if (strlen($login_msg) > 0 || strlen($login_txt) > 0): ?>
+                        <div class="col-auto" style="width: 165px;">&nbsp;</div>
+                        <? endif; ?>
+                    </div>
+                </div>
+            </div>
+        <? if (strlen($target_url) > 0): ?>
+        </a>
+        <? endif; ?>
+    <? else: ?>
+        <a href="/WordTour" onclick="if ( typeof ga != 'undefined' ) { ga('send', 'event', 'ne', 'click', 'ne_login_image'); }">
+        <div class="cc-col w-60p left-connect-bg">
+        </div>
+        </a>
+    <? endif; ?>
+    <div class="cc-col w-40p fill-parent-h">
+        <div class="cc-table middle fill-parent">
+            <div>
+            <? if ($is_login && $sid == null): ?>
+                <div class="m-center font-24 text-gray text-center">
+                    현재 <?= $login_info->login_id ?> 으로 로그인 중입니다.<br><br>
+                    <a class="btn btn-lg btn-primary w-180" href="/Main">학습 홈으로</a>
+                </div>
+            <? else: ?>
+                <div class="w-370 m-center">                    
+                    <!-- <div class="w-250 m-center">
+                        <a class="btn btn-lg btn-block shadow btn-danger2 btn-ex-login font-15"  data-facebook="0">
+                            <i class="fa fa-google"></i> Google로 로그인
+                        </a>
+                        <a class="btn btn-lg btn-block shadow btn-facebook m-t-12 btn-ex-login font-15"  data-facebook="1">
+                            <i class="fa fa-facebook"></i> Facebook으로 로그인
+                        </a>
+                    </div>
+                    <div class="text-seperate m-t-25">
+                        <span>또는</span>
+                    </div> -->
+                    <form id="loginForm" method="post" onsubmit="loginProc(); return false;">
+                    <input type="hidden" name="sess_key" value="<?= session_id(); ?>">
+                    <input type="hidden" name="redirect" value="<?= $redirect ?>">
+                    <div class="m-l m-r m-t-25 text-center">
+                        <input type="text" placeholder="아이디" title="아이디" required="" value="<?= $sid ?>" name="login_id" id="login_id" class="form-control input-lg font-15" autocomplete="off" autocapitalize="off" onkeydown="hideLoginIdMsg();" />
+                        <span id="login_fail_id" class="text-danger small hidden"><?= lang('login_fail_id') ?></span>
+
+                        <input type="password" title="비밀번호" placeholder="비밀번호" required="" value="" name="login_pwd" id="login_pwd" class="form-control input-lg m-t-12 font-15" autocapitalize="off" onkeydown="hideLoginPwdMsg();" />
+                        <span id="login_fail_pwd" class="text-danger small hidden"><?= lang('login_fail_pwd') ?></span>
+                        
+                    </div>
+                    <div class="m-t-md text-center">Google 계정으로 가입하셨나요? <a class="btn-ex-login text-primary anchor-underline" data-facebook="0">자세히</a></div>
+                    
+                    <div class="checkbox primary text-primary text-center m-t-md" style="padding-left: 0; margin: 0px 15px;">
+                        <input name="id_remember" id="id_remember" type="checkbox"><label for="id_remember" class="text-default text-left"> 아이디 기억하기</label><br>
+                        <button class="btn btn-block btn-lg btn-success shadow m-t-lg font-15">로그인</button>
+                    </div>
+                    
+
+                    <div class="text-center m-t-lg">
+                        <a id="findpwd_btn" class="text-primary anchor-underline font-bold2" href="/LoginPage/findpwd" data-toggle="modal" data-target="#psw_find_modal">아이디/비번찾기</a>
+                        <span class="text-ccc" style="padding: 0 12px;">|</span>
+                        <a href="/Login/regist" class="text-success anchor-underline font-bold2">회원가입</a>
+                    </div>
+                    </form>
+                    
+                </div>
+            <? endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="psw_find_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px; min-height: 600px;">
+            <!-- remote find pwd popup 영역 -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="find_user_list_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header" style="color: #333; border: none;">
+                <div class="pull-right">
+                    <a class="font-22" data-dismiss="modal"><i class="cc times"></i></a>
+                </div>
+            </div>
+            <div class="modal-body font-14">
+                <div class="text-center font-16 font-bold p-b">아래에서 자신의 이름을 선택해 주세요.</div>
+                <div class="m-t-xs find-select-ly cc-scroll-y success" style="max-height:350px;padding-left: 80px;">
+                </div>
+                <div class="text-center m-t-lg"><a class="btn-send-id-multi-ok btn btn-lg btn-success"></a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<? if ($is_login == false || $sid != null): ?>
+
+<div class="modal fade" id="google_fb_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-body" style='padding:0px'>
+            <!-- remote find pwd popup 영역 -->
+            <div style="padding: 20px;">최근 구글/페이스북의 연동장애가 빈번하여 로그인 후 자체계정으로 전환하는 것을 권고 드립니다. 새로운 클래스카드 ID로 변경하셔도 기존 모든 세트, 클래스정보와 학습정보는 그대로 유지되며 더욱 편리하게 이용가능합니다.</div>
+                <img src='/images/main/google_fb_login_info.png' style='width:100%'>
+            </div>
+            <div class='text-center p-sm'>
+                <div class=' btn btn-success w-200 login-api google_modal_btn hidden' data-url="<?= $google_url ?>" data-facebook="0">확인</div> 
+                <div class=' btn btn-success w-200 login-api fb_modal_btn hidden'  data-url="<?= $facebook_url ?>" data-facebook="1">확인</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="fb_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-body" style='padding:0px'>
+                <div class="text-center" style="padding: 40px;"><span class="font-bold">Facebook 정책으로 연동계정이 중단되었습니다.</span><br><br>Facebook 계정 연동 사용자께서는 고객센터로 연락주시면<br>클래스카드 자체 계정으로 변경해 드리겠습니다.<br><br>고객센터 : 070-4042-1075<br><br><a class="btn btn-primary w-100" data-dismiss="modal">확인</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<?endif;?>
+<script type="text/javascript">
+    if (typeof(Storage) !== "undefined") {
+        var rem_id = localStorage.getItem('id_remember');
+    } else {
+        var rem_id = '';
+    }
+    if (rem_id !== undefined && rem_id != null && rem_id != '') {
+        $('#login_id').val(rem_id);
+        $('#id_remember').prop("checked", true);
+    }
+    function loginProc() {
+        $('#login_fail_id').addClass('hidden');
+        $('#login_fail_pwd').addClass('hidden');
+
+        if (typeof(Storage) !== "undefined") {
+            if ($('#id_remember')[0].checked) { 
+                // 로컬 스토리지 저장
+                localStorage.setItem('id_remember', $('#login_id').val());
+            } else {
+                localStorage.removeItem('id_remember');
+            }
+        }
+
+        jQuery.ajax({
+            url: "<?= $this->config->item('loginproc_url') ?>",
+            global: false,
+            type: "POST",
+            data: $('#loginForm').serialize(),
+            dataType: "json",
+            async: true,
+            success: function(data) {
+                console.log(data);
+                if (data.result == 'ok') {
+                    <?
+                        if ($redirect==null || $redirect=="") {
+                            $enc_redirect = '';                       
+                        } else {
+                            // $enc_redirect = urlencode($redirect);
+                            $enc_redirect = $redirect;
+                        }
+                    ?>
+
+                    var is_pro = false;
+                    var redirect_url = '<?= $enc_redirect ?>';
+                    if (redirect_url.length == 0 && data.b_s_idx !== undefined && data.is_b_s_owner !== undefined && data.go_pro_page !== undefined && data.is_b_s_owner == 1 && data.go_pro_page == 1) {
+                        redirect_url = '/Pro/intro/' + data.b_s_idx;
+                    } else if (data.pro_request_move == 1){
+                        redirect_url = '/Pro/request';
+                    } else if (data.max_std_page_move == 1){
+                        redirect_url = '/RemoveStudent';
+                    } else if (data.go_user_page !== undefined && data.go_user_page == 1) {
+                        redirect_url = '/Main?w=1';
+                        // is_pro = true;
+                    } else if (data.go_first_class !== undefined && data.go_first_class != 0) {
+                        redirect_url = data.go_first_class;
+                    }
+
+                    if (data.b_s_idx !== undefined && data.b_s_idx > 0) {
+                        is_pro = true;
+                    } else {
+                        is_pro = true;
+                    }
+
+                    if (redirect_url.indexOf('/ClassTest') != -1 || redirect_url.indexOf('/GclassTest') != -1 ){
+                            redirect_url = '/Main';
+                    }
+                    if (data.alert_msg != '') {
+                        showAlert(data.alert_msg, null, function() { setTimeout(function() { document.location.href = '/Main'; }, 500); });
+                        return;
+                    }
+
+                    if (is_pro) {
+                        <? if ($this->config->item('is_all_https') == 0): ?>
+                        document.location.href = '/Register/goHttp?redirect=' + redirect_url;
+                        <? else: ?>
+                        if (redirect_url == null || redirect_url== '') {
+                            document.location.href = '/Main';
+                        } else {
+                            document.location.href = redirect_url;
+                        }
+                        
+                        <? endif; ?>
+                    } else {
+                        showAlert('사용자가 많아 일시적으로 로그인이 어렵습니다. 조금만 기다려주세요.', null, function() { setTimeout(function() { document.location.href = '/Main/logout'; }, 500); });
+                    }
+                } else {
+                    if (data.msg == 'id') {
+                        $('#login_fail_id').removeClass('hidden');
+                        $('#login_id').focus();
+                    } else if (data.msg == 'pwd') {
+                        $('#login_fail_pwd').removeClass('hidden');
+                        $('#login_pwd').val('');
+                        $('#login_pwd').focus();
+                    } else if (data.msg == 'explorer'){
+                         // 브라우저 호환 점검
+                        $.reject({  
+                            // reject: { all: true },\t// Test 용
+                            reject: {  
+                                // safari: true, // Apple Safari  
+                                msie: true,\t// Covers MSIE <= 6 (Blocked by default)
+                                firefox: true, // Mozilla Firefox  
+                                opera: true, // Opera  
+                                konqueror: true, // Konqueror (Linux) 
+                                unknown: true // Everything else  
+                            },
+                            display: ['chrome'], // Displays only chrome, IE
+                            header: '<div style="line-height: 1.5;">클래스카드는 빠르고 보안이 강력한 <span class="text-success">구글 크롬</span> 브라우저에 최적화 되어 있습니다.</div>', // Header Text  
+                            paragraph1: '', // Paragraph 1  
+                            paragraph2: '',  
+                            closeMessage: '<div style="font-size: 1.3em"><div>또 MS가 지원중단한 IE를 이용하지 않기를 권고 드립니다. 클래스카드는 IE에서 <span class="text-danger">일부 기능이 동작하지 않고 학습 정보가 저장되지 않을 수 있습니다.</span></div><div class="text-center"><img class="w-150" src="/images/main/img_block_ie_01.png" /></div></div>', // Message below close window link  
+                            closeLink: '<div class="text-center" style="margin-top: -20px;"><span class="bottom btn btn-info btn-lg mw-180">확인</span></div>',
+                            close: true,
+                            closeESC: true,
+                            closeCookie: true,
+                            cookieSettings: {  
+                                // Path for the cookie to be saved on  
+                                // Should be root domain in most cases  
+                                path: '/',  
+                                // Expiration Date (in seconds)  
+                                // 0 (default) means it ends with the current session  
+                                // expires: 86400\t\t// 1day
+                                expires: 1\t\t// 1hour
+                            }
+                        }); // Customized Browsers  
+                        
+                    }else {
+                        console.log('fail.... i do not know');
+                    }
+                }
+            },
+            error: function(response, textStatus, errorThrown) {
+                console.log('response : ' + response);
+            }
+        });
+    }
+    
+    function saveRememberLogin(el)
+    {
+        var chk_val = 'off';
+        var redirect = '<? if ($redirect==null || $redirect==""): ?><? else: ?><?= $redirect ?><? endif; ?>';
+        
+        jQuery.ajax({
+            url: "/LoginProc/saveRememberLogin",
+            global: false,
+            type: "POST",
+            data: {login_remember: chk_val, login_redirect: redirect},
+            dataType: "json",
+            async: true,
+            success: function(data) {
+                console.log(data);
+                if (data.result == 'ok') {
+                    if ($(el).data('facebook') == '1') {
+                        logInWithFacebook();
+                    } else {
+                        window.location.href = $(el).data('url');
+                    }
+                }
+            },
+            error: function(response, textStatus, errorThrown) {
+                console.log('response : ' + response);
+            }
+        });
+    }
+    
+    function hideLoginIdMsg() {
+        $('#login_fail_id').addClass('hidden');
+    }
+    
+    function hideLoginPwdMsg() {
+        $('#login_fail_pwd').addClass('hidden');
+    }
+
+    $('#psw_find_modal').on('shown.bs.modal', function () {
+        setTimeout(function() {
+            $('#pw_find_login_id', $('#pwdFindForm')).focus();
+        }, 700);
+    });
+
+    $('.btn-ex-login').unbind('click').click(function() {
+        if ($(this).data('facebook') == "0"){
+            $('.google_modal_btn').removeClass('hidden');
+            $('.fb_modal_btn').addClass('hidden');
+            $('#google_fb_modal').modal('show');
+        }else{
+            $('.google_modal_btn').addClass('hidden');
+            $('.fb_modal_btn').removeClass('hidden');
+            $('#fb_modal').modal('show');
+        }  
+        
+    });
+    $('#google_fb_modal .login-api').unbind('click').click(function(){
+        saveRememberLogin($(this));
+    })
+
+jQuery(function($){
+    
+    // 브라우저 호환 점검
+    $.reject({  
+        // reject: { all: true },\t// Test 용
+        reject: {  
+            // safari: true, // Apple Safari  
+            msie: true,\t// Covers MSIE <= 6 (Blocked by default)
+            firefox: true, // Mozilla Firefox  
+            opera: true, // Opera  
+            konqueror: true, // Konqueror (Linux) 
+            unknown: true // Everything else  
+        },
+        display: ['chrome'], // Displays only chrome, IE
+        header: '<div style="line-height: 1.5;">클래스카드는 빠르고 보안이 강력한 <span class="text-success">구글 크롬</span> 브라우저에 최적화 되어 있습니다.</div>', // Header Text  
+        paragraph1: '', // Paragraph 1  
+        paragraph2: '',  
+        closeMessage: '<div style="font-size: 1.3em"><div>또 MS가 지원중단한 IE를 이용하지 않기를 권고 드립니다. 클래스카드는 IE에서 <span class="text-danger">일부 기능이 동작하지 않고 학습 정보가 저장되지 않을 수 있습니다.</span></div><div class="text-center"><img class="w-150" src="/images/main/img_block_ie_01.png" /></div></div>', // Message below close window link  
+        closeLink: '<div class="text-center" style="margin-top: -20px;"><span class="bottom btn btn-info btn-lg mw-180">확인</span></div>',
+        close: true,
+        closeESC: true,
+        closeCookie: true,
+        cookieSettings: {  
+            // Path for the cookie to be saved on  
+            // Should be root domain in most cases  
+            path: '/',  
+            // Expiration Date (in seconds)  
+            // 0 (default) means it ends with the current session  
+            // expires: 86400\t\t// 1day
+            expires: 1\t\t// 1hour
+        }
+    }); // Customized Browsers  
+
+    
+    if (!$.browser.msie) {
+        if (rem_id !== undefined && rem_id != null && rem_id != '') {
+            $('#login_pwd').focus();
+        } else {
+            $('#login_id').focus();
+        }
+    }
+
+<?
+    if (isset($deviceType) && $deviceType == 'phone') :
+        if (isset($_SESSION['rfr']) == TRUE) {
+            $utm_source = $_SESSION['rfr'];
+        } else {
+            $utm_source = 'cta_android';
+        }
+
+        if ($is_android==1):
+            $r_val = "utm_source=". $utm_source ."&utm_medium=web&utm_campaign=appdownload";
+            $r_val = urlencode($r_val);
+            $r_url = "https://play.google.com/store/apps/details?id=classcard.net&referrer=".$r_val;
+        else:
+            $r_val = "utm_source=cta_android&utm_medium=web&utm_campaign=appdownload";
+            $enc_r_val = base64_encode($r_val);
+            $r_url = "https://itunes.apple.com/kr/app/id1176435331?mt=8";
+        endif;
+?>
+        showConfirm('스마트폰에서는 클래스카드 앱 이용을 권장합니다.', null, function() { document.location.href = '<?= $r_url ?>'; }, null, null, null, '앱 설치하러 가기', '계속하기');
+
+<?
+    elseif (isset($deviceType) && $deviceType == 'tablet') :
+?>
+        if ($.cookie('tb_noti') == undefined || eval($.cookie('tb_noti')) != 1) {
+            showConfirm('태블릿에서는 외장 키보드를 함께 이용하거나, 스크린 키보드를 잘 설정하여 이용해 주세요.', null, function() { document.location.href = 'https://cafe.naver.com/classcardhakwon/6012'; }, null, null, null, '자세히 보기', '계속하기', null, null, null, null, 'tb_noti');
+        }
+<?
+    endif;
+?>
+
+});
+</script>`;

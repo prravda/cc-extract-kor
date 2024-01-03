@@ -1,0 +1,16 @@
+.extractedKorean {
+    display: flex;
+    justify-content: space-around; /* Adjusts the space between the flex items */
+    align-items: flex-start; /* Aligns items vertically at the top */
+}
+
+.extractedKorean__section {
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    margin: 10px;
+}
+
+.extractedKorean__paragraph {
+    font-size: 0.8em;
+    font-weight: bold;
+}

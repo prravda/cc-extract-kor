@@ -4,6 +4,7 @@ import {
   hugeHtmlBlockCaseOne,
   hugeHTMLBlockCaseTwo,
   hugeHTMLBlockCaseThree,
+  hugeHTMLBlockCaseFour,
 } from "./test-suits/test-suits-html-blocks";
 
 describe("Test: korExtractor function", () => {
@@ -33,12 +34,17 @@ describe("Test: korExtractor function", () => {
 
   it("should return an array of korean characters - case 4", () => {
     const testResult = extractKoreanStringsFromCode(hugeHTMLBlockCaseThree);
-    console.log(testResult);
+    // console.log(testResult);
   });
 
   it("should successfully extract korean characters which contains breaking tag(<br>)", () => {
     const { html, korean } = testSuitsHtmlBlocks.koreanContainBreakingTag;
     const testResult = extractKoreanStringsFromCode(html);
+    // console.log(testResult);
+  });
+
+  it("should successfully extract korean characters which contains breaking tag(<br>)", () => {
+    const testResult = extractKoreanStringsFromCode(hugeHTMLBlockCaseFour);
     console.log(testResult);
   });
 });

@@ -16,17 +16,29 @@ export const isCommentLine = (codeLine: string): boolean => {
   );
 };
 
+export const doesNotContainKorean = (codeLine: string): boolean => {
+  const patternForNonKoreanCharactersOnly = /^[^\uAC00-\uD7AF]*$/;
+
+  return patternForNonKoreanCharactersOnly.test(codeLine);
+};
+
 export const extractKoreanStrings = (codeLine: string): string[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
-    /(<br\s*\/?>)?[\uAC00-\uD7AF]+([.,\s\/|0-9]*(<br\s*\/?>)?[\uAC00-\uD7AF]+)*(<br\s*\/?>|[.~!?])?/g;
+    /(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+([.,~!?\s\/|0-9]*(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+)*(<br\s*\/?>|[.~!?])?/g;
+  // /(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+([.,~!?\s\/|0-9]*[\uAC00-\uD7AFa-zA-Z]+)*(<br\s*\/?>|[.~!?])?/g;
 
   // Find all matches in the input code
   const matches = codeLine.match(koreanRegex);
 
-  // Return the matches or an empty array if no matches found
-  return matches || [];
+  // Finally, filter matches which contains only non-korean characters and return
+  return matches ? matches.filter((match) => !doesNotContainKorean(match)) : [];
 };
+
+export interface KoreanExtractorResults {
+  koreanStrings: string[];
+  codeLines: string[];
+}
 
 export const extractKoreanStringsFromCode = (code: string): string[] => {
   // initialize result array
@@ -39,6 +51,9 @@ export const extractKoreanStringsFromCode = (code: string): string[] => {
 
     // then, if this codeline is comment, skip this line
     if (isCommentLine(eachLine)) continue;
+
+    // also, if this codeline contains only non-korean characters, skip this line
+    if (doesNotContainKorean(eachLine)) continue;
 
     // otherwise, extract korean strings from this line
     const koreanStringsInThisLine = extractKoreanStrings(eachLine);

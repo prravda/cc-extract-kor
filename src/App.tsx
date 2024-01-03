@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Input } from "./components/Input";
+import { ExtractedKorean } from "./components/ExtractedKorean";
 
 function App() {
   return (
@@ -9,7 +10,6 @@ function App() {
         <h1>Internal Tool for i18n</h1>
         <h2>1. Paste the code what you want to extract Korean characters</h2>
         <Input />
-        <h2>Extracted Korean characters and it's source</h2>
       </header>
     </div>
   );
