@@ -7,6 +7,8 @@ import {
   hugeHTMLBlockCaseFour,
 } from "./test-suits/test-suits-html-blocks";
 
+// TODO: updtae test code
+// TODO: add test case for huge html block
 describe("Test: korExtractor function", () => {
   it("should return an array of korean characters - case 0", () => {
     const { html, korean } = testSuitsHtmlBlocks.koreanInplaceHolder;

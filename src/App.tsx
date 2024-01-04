@@ -9,7 +9,7 @@ function App() {
         <h1>[ Internal Tool for i18n ]</h1>
         <h2>1. Paste the code what you want to extract Korean characters</h2>
         <Input />
-        <h1> - </h1>
+        <h1> Paste this result as Plain Text </h1>
       </header>
     </div>
   );
