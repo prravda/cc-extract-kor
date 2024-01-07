@@ -1,3 +1,16 @@
+const getReplacementType = (
+  replacementType: "js" | "php" = "php",
+  variable: string,
+) => {
+  switch (replacementType) {
+    case "js":
+      return `lang('${variable}')`;
+    case "php":
+    default:
+      return `<?= lang('${variable}') ?>`;
+  }
+};
+
 export const korReplacer = (
   codeSnippet: string,
   variableNames: string[],
@@ -9,7 +22,7 @@ export const korReplacer = (
     // replace all targetStrings[i] to variableNames[i]
     codeSnippet = codeSnippet.replaceAll(
       targetStrings[i],
-      `<?= lang('${variableNames[i]}') ?>`,
+      getReplacementType("js", variableNames[i]),
     );
   }
 

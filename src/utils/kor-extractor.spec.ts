@@ -1,48 +1,63 @@
 import { extractKoreanStringsFromCode } from "./kor-extractor";
-import {
-  testSuitsHtmlBlocks,
-  hugeHtmlBlockCaseOne,
-  hugeHTMLBlockCaseTwo,
-  hugeHTMLBlockCaseThree,
-  hugeHTMLBlockCaseFour,
-} from "./test-suits/test-suits-html-blocks";
+import { testSuitsHtmlBlocks } from "./test-suits/test-suits-html-blocks";
 
-// TODO: updtae test code
-// TODO: add test case for huge html block
 describe("Test: korExtractor function", () => {
-  it("should return an array of korean characters - case 0", () => {
-    const { html, korean } = testSuitsHtmlBlocks.koreanInplaceHolder;
-    const testResult = extractKoreanStringsFromCode(html);
+  it("should be defined", () => {
+    expect(extractKoreanStringsFromCode).toBeDefined();
   });
 
-  it("should return an array of korean characters - case 1", () => {
-    const { html, korean } = testSuitsHtmlBlocks.generalCase;
-    const testResult = extractKoreanStringsFromCode(html);
+  it("should extract Korean strings from html block", () => {
+    const { generalCase } = testSuitsHtmlBlocks;
+    const { html, korean } = generalCase;
+
+    const extractedKoreanStrings = extractKoreanStringsFromCode(
+      html,
+    ).map<string>((result) => result.koreanString);
+
+    expect(extractedKoreanStrings).toEqual(korean);
   });
 
-  it("should return an array of korean characters - case 2", () => {
-    const result = extractKoreanStringsFromCode(hugeHtmlBlockCaseOne);
-    console.log(result);
+  it("should extract Korean strings from html block with Korean in placeholder", () => {
+    const { caseKoreanInPlaceHolder } = testSuitsHtmlBlocks;
+    const { html, korean } = caseKoreanInPlaceHolder;
+
+    const extractedKoreanStrings = extractKoreanStringsFromCode(
+      html,
+    ).map<string>((result) => result.koreanString);
+
+    expect(extractedKoreanStrings).toEqual(korean);
   });
 
-  it("should return an array of korean characters - case 3", () => {
-    const result = extractKoreanStringsFromCode(hugeHTMLBlockCaseTwo);
-    console.log(result);
+  it("should extract Korean strings from html block with breaking tag", () => {
+    const { caseContainsBreakingTag } = testSuitsHtmlBlocks;
+    const { html, korean } = caseContainsBreakingTag;
+
+    const extractedKoreanStrings = extractKoreanStringsFromCode(
+      html,
+    ).map<string>((result) => result.koreanString);
+
+    expect(extractedKoreanStrings).toEqual(korean);
   });
 
-  it("should return an array of korean characters - case 4", () => {
-    const testResult = extractKoreanStringsFromCode(hugeHTMLBlockCaseThree);
-    // console.log(testResult);
+  it("should extract Korean strings from html block with multiple breaking tags", () => {
+    const { caseContainsMultipleBreakingTags } = testSuitsHtmlBlocks;
+    const { html, korean } = caseContainsMultipleBreakingTags;
+
+    const extractedKoreanStrings = extractKoreanStringsFromCode(
+      html,
+    ).map<string>((result) => result.koreanString);
+
+    expect(extractedKoreanStrings).toEqual(korean);
   });
 
-  it("should successfully extract korean characters which contains breaking tag(<br>)", () => {
-    const { html, korean } = testSuitsHtmlBlocks.koreanContainBreakingTag;
-    const testResult = extractKoreanStringsFromCode(html);
-    // console.log(testResult);
-  });
+  it("should extract Korean strings from html block with number seg one", () => {
+    const { caseContainsNumberSegOne } = testSuitsHtmlBlocks;
+    const { html, korean } = caseContainsNumberSegOne;
 
-  it("should successfully extract korean characters which contains breaking tag(<br>)", () => {
-    const testResult = extractKoreanStringsFromCode(hugeHTMLBlockCaseFour);
-    console.log(testResult);
+    const extractedKoreanStrings = extractKoreanStringsFromCode(
+      html,
+    ).map<string>((result) => result.koreanString);
+
+    expect(extractedKoreanStrings).toEqual(korean);
   });
 });
