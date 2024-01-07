@@ -29,8 +29,6 @@ export const extractKoreanStrings = (
 ): KoreanExtractorResults[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
-    // /(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+([.,~!?\s\/|0-9]*(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+)*(<br\s*\/?>|[.~!?])?/g;
-    // /(<br\s*\/?>)?[\uAC00-\uD7AFa-zA-Z]+([.,~!?\s\/|0-9]*[\uAC00-\uD7AFa-zA-Z]+)*(<br\s*\/?>|[.~!?])?/g;
     /((<br\s*\/?>)*[\uAC00-\uD7AFa-zA-Z0-9%]+([.,~!?\s\/|]*(<br\s*\/?>)*[\uAC00-\uD7AFa-zA-Z0-9%]+)*(<br\s*\/?>|[.~!?])?)/g;
 
   // Find all matches in the input code
