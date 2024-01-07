@@ -4,6 +4,7 @@ export function ExtractedKorean(props: {
   extractedKorean: string;
   variableName?: string;
   onDelete: () => void;
+  onKoreanChange: (newKorean: string) => void;
 }) {
   return (
     <div className={"extractedKorean"}>
@@ -25,7 +26,8 @@ export function ExtractedKorean(props: {
           rows={5}
           cols={30}
           value={props.extractedKorean}
-          readOnly={true}
+          readOnly={false}
+          onChange={(event) => props.onKoreanChange(event.target.value)}
         ></textarea>
       </div>
 

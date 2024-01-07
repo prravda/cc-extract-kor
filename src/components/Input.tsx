@@ -18,6 +18,16 @@ export function Input() {
     setCode(event.target.value);
   };
 
+  const handleKoreanChange = (index: number, newKorean: string) => {
+    const updatedResults = koreanExtractorResult.map((result, i) => {
+      if (i === index) {
+        return { ...result, koreanString: newKorean };
+      }
+      return result;
+    });
+    setKoreanExtractorResult(updatedResults);
+  };
+
   const handleVariableNameChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
@@ -96,6 +106,7 @@ export function Input() {
           extractedKorean={koreanString}
           variableName={variableNames[index] || ""}
           onDelete={() => handleDelete(index)}
+          onKoreanChange={(newKorean) => handleKoreanChange(index, newKorean)}
         />
       ))}
 
