@@ -3,6 +3,7 @@ import { ExtractedKorean } from "./ExtractedKorean";
 import { extractKoreanStringsFromCode } from "../utils/kor-extractor";
 import { korReplacer } from "../utils/kor-replacer";
 import { KoreanExtractorResults } from "../interfaces/korean-extractor-results";
+import "./Input.css";
 
 export function Input() {
   const [code, setCode] = useState<string>(``);
@@ -16,6 +17,15 @@ export function Input() {
 
   const handleCodeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCode(event.target.value);
+  };
+
+  // create a function for sort koreanExtractorResult in state by koreanString's length
+  // and set this sorted result to koreanExtractorResult in state using setKoreanExtractorResult
+  const sortKoreanExtractorResult = () => {
+    const sortedKoreanExtractorResult = [...koreanExtractorResult].sort(
+      (a, b) => b.koreanString.length - a.koreanString.length,
+    );
+    setKoreanExtractorResult(sortedKoreanExtractorResult);
   };
 
   const handleKoreanChange = (index: number, newKorean: string) => {
@@ -63,11 +73,13 @@ export function Input() {
         />
 
         <div style={{ marginTop: "10px" }}>
-          <button type="submit" className="input__submit">
+          <button type="submit" className={"basicButton"}>
             analyze
           </button>
         </div>
       </form>
+
+      <h2>-</h2>
 
       <h2>2. Extracted Korean characters and it's source</h2>
       <p>{`Extracted ${koreanExtractorResult.length} Korean characters, It separated by newline`}</p>
@@ -93,6 +105,7 @@ export function Input() {
       <div style={{ marginTop: "10px" }}>
         <button
           id={"changeVariableName"}
+          className={"basicButton"}
           onClick={() => setVariableNames([...variableNames])}
         >
           Update variable names
@@ -110,12 +123,24 @@ export function Input() {
         />
       ))}
 
+      <h3>Update button for modified extracted korean strings</h3>
+      <button
+        id={"sortKoreanExtractorResult"}
+        className={"basicButton"}
+        onClick={() => sortKoreanExtractorResult()}
+      >
+        Re-render based on changed order of KoreanExtractorResult
+      </button>
+
+      <h2>-</h2>
+
       <h2>3. Replace the Korean into PHP variable</h2>
       <p>{`Before executing this, assign variables to your assets`}</p>
 
       <div style={{ marginTop: "10px" }}>
         <button
           id={"replaceStringIntoVariable"}
+          className={"basicButton"}
           onClick={() =>
             setModifiedCode(
               korReplacer(

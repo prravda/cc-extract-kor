@@ -22,7 +22,7 @@ export const korReplacer = (
     // replace all targetStrings[i] to variableNames[i]
     codeSnippet = codeSnippet.replaceAll(
       targetStrings[i],
-      getReplacementType("js", variableNames[i]),
+      getReplacementType("php", variableNames[i]),
     );
   }
 

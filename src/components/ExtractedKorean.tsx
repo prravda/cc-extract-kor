@@ -38,6 +38,7 @@ export function ExtractedKorean(props: {
           rows={5}
           cols={30}
           value={props.variableName}
+          readOnly={true}
         ></textarea>
       </div>
 

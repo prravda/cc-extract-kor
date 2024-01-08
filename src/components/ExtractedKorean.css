@@ -23,6 +23,18 @@
     padding: 10px 50px; /* Larger button */
     font-size: 1em; /* Bigger text */
     cursor: pointer; /* Cursor changes to pointer on hover */
+    background-color: #ffb500;
+    border: none;
+    color: #ff0000;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.delete-button:active {
+    background-color: #367c39;
+    transform: scale(0.98);
 }
 
 .extractedKorean__paragraph {
