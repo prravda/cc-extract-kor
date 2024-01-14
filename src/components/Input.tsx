@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import { ExtractedKorean } from "./ExtractedKorean";
 import { extractKoreanStringsFromCode } from "../utils/kor-extractor";
-import { korReplacer } from "../utils/kor-replacer";
+import { korReplacerByEachLines } from "../utils/kor-replacer";
 import { KoreanExtractorResults } from "../interfaces/korean-extractor-results";
 import "./Input.css";
 
@@ -12,6 +12,8 @@ export function Input() {
   const [koreanExtractorResult, setKoreanExtractorResult] = useState<
     KoreanExtractorResults[]
   >([]);
+
+  const [ignoredKeywords, setIgnoredKeywords] = useState<string[]>([]);
 
   const [variableNames, setVariableNames] = useState<string[]>([]);
 
@@ -51,6 +53,10 @@ export function Input() {
   };
 
   const handleDelete = (index: number) => {
+    // add the deleted extracted korean keywords to `ignoredKeywords` state
+    const deletedKeyword = koreanExtractorResult[index].koreanString;
+    setIgnoredKeywords([...ignoredKeywords, deletedKeyword]);
+
     const newKoreanExtractorResult = koreanExtractorResult.filter(
       (_, i) => i !== index,
     );
@@ -63,6 +69,7 @@ export function Input() {
     <div>
       <form id={"code__input"} className="input" onSubmit={handleSubmit}>
         <textarea
+          name={"sourceCodes"}
           className="input__textarea"
           placeholder="Input your code here"
           value={code}
@@ -84,6 +91,7 @@ export function Input() {
       <h2>2. Extracted Korean characters and it's source</h2>
       <p>{`Extracted ${koreanExtractorResult.length} Korean characters, It separated by newline`}</p>
       <textarea
+        name={"extractedKorean"}
         className="extractedKorean__textarea"
         rows={10}
         cols={80}
@@ -95,6 +103,7 @@ export function Input() {
       <p>{`Type the variable name to below text area, It separated by newline`}</p>
 
       <textarea
+        name={"variableNames"}
         className="extractedKorean__textarea"
         rows={10}
         cols={80}
@@ -143,13 +152,16 @@ export function Input() {
           className={"basicButton"}
           onClick={() =>
             setModifiedCode(
-              korReplacer(
-                code,
-                variableNames,
-                koreanExtractorResult.map<string>(
+              korReplacerByEachLines({
+                codeSnippet: code,
+                variableNames: variableNames,
+                targetStrings: koreanExtractorResult.map<string>(
                   (result) => result.koreanString,
                 ),
-              ),
+                isJavascript: false,
+                phpReplacementType: "phpWithAngleBracket",
+                ignoredKeywords: ignoredKeywords,
+              }),
             )
           }
         >
@@ -160,6 +172,7 @@ export function Input() {
       <p>{`Replaced code`}</p>
       <div>
         <textarea
+          name={"modifiedCode"}
           className="extractedKorean__textarea"
           rows={10}
           cols={80}

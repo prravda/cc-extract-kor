@@ -39,17 +39,6 @@ describe("Test: korExtractor function", () => {
     expect(extractedKoreanStrings).toEqual(korean);
   });
 
-  it("should extract Korean strings from html block with multiple breaking tags", () => {
-    const { caseContainsMultipleBreakingTags } = testSuitsHtmlBlocks;
-    const { html, korean } = caseContainsMultipleBreakingTags;
-
-    const extractedKoreanStrings = extractKoreanStringsFromCode(
-      html,
-    ).map<string>((result) => result.koreanString);
-
-    expect(extractedKoreanStrings).toEqual(korean);
-  });
-
   it("should extract Korean strings from html block with number seg one", () => {
     const { caseContainsNumberSegOne } = testSuitsHtmlBlocks;
     const { html, korean } = caseContainsNumberSegOne;

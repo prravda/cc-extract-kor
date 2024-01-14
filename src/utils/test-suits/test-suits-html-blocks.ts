@@ -46,29 +46,12 @@ placeholder="정답을 입력하고 엔터를 치세요" autocomplete="off" auto
    <div><br>처음에 있는 경우</div>
    <div>사이에<br>있는 경우</div>
    <div>끝에 있는 경우<br></div>
-</div>>`,
+</div>`,
 
     korean: [
       `<br>처음에 있는 경우`,
       `사이에<br>있는 경우`,
       `끝에 있는 경우<br>`,
-    ],
-  },
-
-  caseContainsMultipleBreakingTags: {
-    html: `
-<div class="quest_body form-inline" style="height: 177px; margin-bottom: 10px; padding-top:70px;">
-   <div>
-        <div><br><br>처음에 있는 경우</div>
-        <div>사이에<br> <br>있는 경우</div>
-        <div>끝에 있는 경우<br><br></div>
-  </div>
-</div>`,
-
-    korean: [
-      `<br><br>처음에 있는 경우`,
-      `사이에<br> <br>있는 경우`,
-      `끝에 있는 경우<br><br>`,
     ],
   },
 

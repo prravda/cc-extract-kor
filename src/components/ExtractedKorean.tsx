@@ -11,6 +11,7 @@ export function ExtractedKorean(props: {
       <div className={"extractedKorean__section"}>
         <p className={"extractedKorean__paragraph"}>Source Code Line</p>
         <textarea
+          name={"sourceCodeLine"}
           className="extractedKorean__textarea"
           rows={10}
           cols={50}
@@ -22,6 +23,7 @@ export function ExtractedKorean(props: {
       <div className={"extractedKorean__section"}>
         <p className={"extractedKorean__paragraph"}>Extracted Korean</p>
         <textarea
+          name={"extractedKorean"}
           className="extractedKorean__textarea"
           rows={5}
           cols={30}
@@ -34,6 +36,7 @@ export function ExtractedKorean(props: {
       <div className={"extractedKorean__section"}>
         <p className={"extractedKorean__paragraph"}>Variable Name</p>
         <textarea
+          name={"variableName"}
           className="extractedKorean__textarea"
           rows={5}
           cols={30}
