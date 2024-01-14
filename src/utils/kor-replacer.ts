@@ -1,3 +1,5 @@
+import { isCommentLine } from "./kor-extractor";
+
 export type PhpReplacementType = "phpWithAngleBracket" | "phpPlain";
 export const getPhpReplacementType = (
   replacementType: PhpReplacementType = "phpWithAngleBracket",
@@ -37,27 +39,95 @@ export const replaceJsString = (
     .replaceAll(targetString, jsWithoutQuotes);
 };
 
-export const korReplacer = (
-  codeSnippet: string,
-  variableNames: string[],
-  targetStrings: string[],
-  isJavascript: boolean = false,
-  phpReplacementType: PhpReplacementType = "phpWithAngleBracket",
-) => {
-  let modifiedCode = codeSnippet;
+interface KorReplacerInput {
+  codeSnippet: string;
+  variableNames: string[];
+  targetStrings: string[];
+  isJavascript?: boolean;
+  phpReplacementType?: PhpReplacementType;
+  ignoredKeywords: string[];
+}
 
-  targetStrings.forEach((targetString, index) => {
+interface KorReplacerByEachLinesInput extends KorReplacerInput {}
+
+export const korReplacer = ({
+  codeSnippet,
+  variableNames,
+  targetStrings,
+  isJavascript = false,
+  phpReplacementType = "phpWithAngleBracket",
+  ignoredKeywords,
+}: KorReplacerInput) => {
+  let modifiedCodeLine = codeSnippet;
+
+  for (const [index, targetString] of targetStrings.entries()) {
     const variableName = variableNames[index];
+    // if the target string is a substring of one of ignored keywords
+    // skip this target string
+    if (
+      ignoredKeywords.some((ignoredKeyword) =>
+        ignoredKeyword.includes(targetString),
+      )
+    ) {
+      continue;
+    }
 
     if (isJavascript) {
-      modifiedCode = replaceJsString(modifiedCode, targetString, variableName);
+      modifiedCodeLine = replaceJsString(
+        modifiedCodeLine,
+        targetString,
+        variableName,
+      );
     } else {
-      modifiedCode = modifiedCode.replaceAll(
+      modifiedCodeLine = modifiedCodeLine.replaceAll(
         targetString,
         getPhpReplacementType(phpReplacementType, variableName),
       );
     }
-  });
+  }
 
-  return modifiedCode;
+  return modifiedCodeLine;
+};
+
+export const korReplacerByEachLines = ({
+  codeSnippet,
+  variableNames,
+  targetStrings,
+  isJavascript = false,
+  phpReplacementType = "phpWithAngleBracket",
+  ignoredKeywords,
+}: KorReplacerByEachLinesInput): string => {
+  // an array of code lines after replacing
+  const replacedCodeLines: string[] = [];
+
+  // splitting by \n and iterate them
+  for (const codeLine of codeSnippet.split("\n")) {
+    // if this code line is empty,
+    // just push this code line and skip it
+    if (codeLine.trim() === "") {
+      replacedCodeLines.push(codeLine);
+      continue;
+    }
+    // if this code line is comment,
+    // just push this code line and skip it
+    if (isCommentLine(codeLine)) {
+      replacedCodeLines.push(codeLine);
+      continue;
+    }
+
+    // Replace this line using korReplacer
+    const modifiedCodeLine = korReplacer({
+      codeSnippet: codeLine,
+      variableNames,
+      targetStrings,
+      isJavascript,
+      phpReplacementType,
+      ignoredKeywords,
+    });
+    replacedCodeLines.push(modifiedCodeLine);
+  }
+
+  // join all code lines with \n
+  // and return it
+  return replacedCodeLines.join("\n");
 };

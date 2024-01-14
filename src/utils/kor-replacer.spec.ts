@@ -56,34 +56,39 @@ describe("Test: korReplacer function", () => {
 
   it("should replace targetStrings in exampleHTMLBlock in php with angle bracket", () => {
     const expectedResult: string = `<div style="line-height: 1.5;"><?= lang('${variableNames[0]}') ?> <span class="text-success"><?= lang('${variableNames[1]}') ?></span> <?= lang('${variableNames[2]}') ?></div>`;
-    const result: string = korReplacer(
-      exampleHTMLBlock,
+    const result: string = korReplacer({
+      codeSnippet: exampleHTMLBlock,
       variableNames,
       targetStrings,
-    );
+      ignoredKeywords: [],
+    });
     expect(result).toEqual(expectedResult);
   });
 
   it("should replace targetStrings in exampleHTMLBlock in php plain", () => {
     const expectedResult: string = `<div style="line-height: 1.5;">lang('${variableNames[0]}') <span class="text-success">lang('${variableNames[1]}')</span> lang('${variableNames[2]}')</div>`;
-    const result: string = korReplacer(
-      exampleHTMLBlock,
+    const result: string = korReplacer({
+      codeSnippet: exampleHTMLBlock,
       variableNames,
       targetStrings,
-      false,
-      "phpPlain",
-    );
+      isJavascript: false,
+      ignoredKeywords: [],
+      phpReplacementType: "phpPlain",
+    });
+
     expect(result).toEqual(expectedResult);
   });
 
   it("should replace targetStrings in exampleHTMLBlock in javascript", () => {
     const expectedResult: string = `<div style="line-height: 1.5;">\${lang(${variableNames[0]})} <span class="text-success">\${lang(${variableNames[1]})}</span> \${lang(${variableNames[2]})}</div>`;
-    const result: string = korReplacer(
-      exampleHTMLBlock,
+    const result: string = korReplacer({
+      codeSnippet: exampleHTMLBlock,
       variableNames,
       targetStrings,
-      true,
-    );
+      isJavascript: true,
+      ignoredKeywords: [],
+    });
+
     expect(result).toEqual(expectedResult);
   });
 });

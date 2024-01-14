@@ -29,17 +29,18 @@ export const extractKoreanStrings = (
 ): KoreanExtractorResults[] => {
   // Regular expression to match Korean characters, including composite characters
   const koreanRegex =
-    /((<br\s*\/?>)*[\uAC00-\uD7AFa-zA-Z0-9%]+([.,~!?\s\/|]*(<br\s*\/?>)*[\uAC00-\uD7AFa-zA-Z0-9%]+)*(<br\s*\/?>|[.~!?])?)/g;
+    // eslint-disable-next-line
+    /(?:<br\s*\/?>|<\/br>\s*)*[\uAC00-\uD7AFa-zA-Z0-9%]+(?:[\s.,~!?\/|]*(?:<br\s*\/?>|<\/br>\s*)*[\uAC00-\uD7AFa-zA-Z0-9%]+)*(?:[.,~!?]|(?:<br\s*\/?>|<\/br>\s*)+)?/g;
 
   // Find all matches in the input code
   const matches = codeLine.match(koreanRegex);
 
-  // Finally, filter matches which contains only non-korean characters and return
+  // Filter matches which contains only non-korean characters and return
   const extractedKeywords = matches
     ? matches.filter((match) => !doesNotContainKorean(match))
     : [];
 
-  // return extracted keywords and code line
+  // Return extracted keywords and code line
   return extractedKeywords.map<KoreanExtractorResults>((koreanString) => {
     return {
       koreanString,
