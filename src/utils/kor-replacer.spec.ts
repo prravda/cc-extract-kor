@@ -73,7 +73,7 @@ describe("Test: korReplacer function", () => {
       targetStrings,
       isJavascript: false,
       ignoredKeywords: [],
-      phpReplacementType: "phpPlain",
+      phpReplacementType: "plainPhp",
     });
 
     expect(result).toEqual(expectedResult);

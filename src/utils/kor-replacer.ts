@@ -1,18 +1,6 @@
 import { isCommentLine } from "./kor-extractor";
 
-export type PhpReplacementType = "phpWithAngleBracket" | "phpPlain";
-export const getPhpReplacementType = (
-  replacementType: PhpReplacementType = "phpWithAngleBracket",
-  variable: string,
-): string => {
-  switch (replacementType) {
-    case "phpWithAngleBracket":
-      return `<?= lang('${variable}') ?>`;
-    case "phpPlain":
-    default:
-      return `lang('${variable}')`;
-  }
-};
+export type PhpReplacementType = "phpWithAngleBracket" | "plainPhp";
 
 interface JsReplacementType {
   jsWrappedWithQuotes: string;
@@ -22,7 +10,7 @@ interface JsReplacementType {
 const getJsReplacementType = (variable: string): JsReplacementType => {
   return {
     jsWrappedWithQuotes: `lang('${variable}')`,
-    jsWithoutQuotes: `\${lang(${variable})}`,
+    jsWithoutQuotes: `\${lang('${variable}')}`,
   };
 };
 
@@ -37,6 +25,55 @@ export const replaceJsString = (
     .replaceAll(`"${targetString}"`, jsWrappedWithQuotes)
     .replaceAll(`'${targetString}'`, jsWrappedWithQuotes)
     .replaceAll(targetString, jsWithoutQuotes);
+};
+
+interface PlainPhpReplacementType {
+  phpWrappedWithQuotes: string;
+  phpWithoutQuotes: string;
+}
+
+const getPlainPhpReplacementType = (
+  variable: string,
+): PlainPhpReplacementType => {
+  return {
+    phpWrappedWithQuotes: `lang('${variable}')`,
+    phpWithoutQuotes: `lang('${variable}')`,
+  };
+};
+
+export const replacePlainPhpString = (
+  code: string,
+  targetString: string,
+  variableName: string,
+) => {
+  const { phpWrappedWithQuotes, phpWithoutQuotes } =
+    getPlainPhpReplacementType(variableName);
+  return code
+    .replaceAll(`"${targetString}"`, phpWrappedWithQuotes)
+    .replaceAll(`'${targetString}'`, phpWrappedWithQuotes)
+    .replaceAll(targetString, phpWithoutQuotes);
+};
+
+interface PhpWithAngleBracketReplacementType {
+  generalCase: string;
+}
+
+const getPhpWithAngleBracketReplacementType = (
+  variable: string,
+): PhpWithAngleBracketReplacementType => {
+  return {
+    generalCase: `<?= lang('${variable}') ?>`,
+  };
+};
+
+// implements php with angle bracket like replacerPlainPhpString
+const replacerPhpWithAngleBracket = (
+  code: string,
+  targetString: string,
+  variableName: string,
+) => {
+  const { generalCase } = getPhpWithAngleBracketReplacementType(variableName);
+  return code.replaceAll(targetString, generalCase);
 };
 
 interface KorReplacerInput {
@@ -54,9 +91,9 @@ export const korReplacer = ({
   codeSnippet,
   variableNames,
   targetStrings,
+  ignoredKeywords,
   isJavascript = false,
   phpReplacementType = "phpWithAngleBracket",
-  ignoredKeywords,
 }: KorReplacerInput) => {
   let modifiedCodeLine = codeSnippet;
 
@@ -72,16 +109,28 @@ export const korReplacer = ({
       continue;
     }
 
+    // case of JS
     if (isJavascript) {
       modifiedCodeLine = replaceJsString(
         modifiedCodeLine,
         targetString,
         variableName,
       );
-    } else {
-      modifiedCodeLine = modifiedCodeLine.replaceAll(
+    }
+    // case of plain PHP
+    if (phpReplacementType === "plainPhp") {
+      modifiedCodeLine = replacePlainPhpString(
+        modifiedCodeLine,
         targetString,
-        getPhpReplacementType(phpReplacementType, variableName),
+        variableName,
+      );
+    }
+    // case of PHP with angle bracket
+    if (phpReplacementType === "phpWithAngleBracket") {
+      modifiedCodeLine = replacerPhpWithAngleBracket(
+        modifiedCodeLine,
+        targetString,
+        variableName,
       );
     }
   }

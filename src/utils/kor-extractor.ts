@@ -1,20 +1,24 @@
 import { KoreanExtractorResults } from "../interfaces/korean-extractor-results";
 
 export const isCommentLine = (codeLine: string): boolean => {
-  // Remove single-line comments
+  // Remove single-line comments using //
   const patternForSingleLineComments = /\/\/.*/g;
 
-  // Remove HTML comments
+  // Remove HTML comments for single line case using <!-- -->
   const patternForHTMLStyleComments = /<!--[\s\S]*?-->/g;
 
-  // Remove multi-line comments
-  const patternForMultiLineComments = /\/\*[\s\S]*?\*\//g;
+  // Remove PHP comments using #
+  const patternForPHPStyleCommentsUsingSharp = /#.*$/g;
+
+  // Remove multi-line comments for single line case using /* */
+  const patternForMultiLineCommentsInSingularCase = /\/\*[\s\S]*?\*\//g;
 
   // return true if any comments are found
   return (
     patternForSingleLineComments.test(codeLine) ||
     patternForHTMLStyleComments.test(codeLine) ||
-    patternForMultiLineComments.test(codeLine)
+    patternForMultiLineCommentsInSingularCase.test(codeLine) ||
+    patternForPHPStyleCommentsUsingSharp.test(codeLine)
   );
 };
 

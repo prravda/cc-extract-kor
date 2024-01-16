@@ -143,7 +143,7 @@ export function Input() {
 
       <h2>-</h2>
 
-      <h2>3. Replace the Korean into PHP variable</h2>
+      <h2>3. Replace the Korean-included strings into variable</h2>
       <p>{`Before executing this, assign variables to your assets`}</p>
 
       <div style={{ marginTop: "10px" }}>
@@ -165,7 +165,7 @@ export function Input() {
             )
           }
         >
-          Change Korean into PHP variable
+          Change raw strings into variable
         </button>
       </div>
 
